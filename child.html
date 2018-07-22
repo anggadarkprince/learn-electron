@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <style>
+        * {
+            cursor: default;
+        }
+
+        body {
+            height: 100%;
+            background-color: cadetblue;
+            -webkit-user-select: none;
+            -webkit-app-region: drag;
+        }
+
+        a {
+            -webkit-app-region: no-drag;
+        }
+    </style>
+</head>
+<body>
+<h1 style="margin-bottom: 5px">Child!</h1>
+<a href="https://google.com" target="_blank">Google</a>
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+</script>
+</body>
+</html>

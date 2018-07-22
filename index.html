@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <style>
+        body {
+            height: 100%;
+            background-color: maroon;
+        }
+    </style>
+</head>
+<body>
+<h1 style="margin-bottom: 5px">Hello World!</h1>
+<p>We need you.</p>
+<!-- All of the Node.js APIs are available in this renderer process. -->
+We are using Node.js
+<script>document.write(process.versions.node)</script>
+,
+Chromium
+<script>document.write(process.versions.chrome)</script>
+,
+and Electron
+<script>document.write(process.versions.electron)</script>
+.
+<br>
+<textarea name="message" id="message" cols="30" rows="10"></textarea>
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+</script>
+</body>
+</html>
