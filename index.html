@@ -14,20 +14,70 @@
 <h1 style="margin-bottom: 5px">Hello World!</h1>
 <p>We need you.</p>
 <!-- All of the Node.js APIs are available in this renderer process. -->
-We are using Node.js
-<script>document.write(process.versions.node)</script>
-,
-Chromium
-<script>document.write(process.versions.chrome)</script>
-,
-and Electron
-<script>document.write(process.versions.electron)</script>
-.
+We are using Node.js <script>document.write(process.versions.node)</script>,
+Chromium <script>document.write(process.versions.chrome)</script>,
+and Electron <script>document.write(process.versions.electron)</script>.
 <br>
+
 <textarea name="message" id="message" cols="30" rows="10"></textarea>
+
+<a onclick="openWin()" href="#">Open Google</a>
+<a onclick="closeWin()" href="#">Close Google</a>
+
+<div>
+    <button id="zoom-in">Zoom In</button>
+    <button id="zoom-out">Zoom Out</button>
+    <button id="zoom-reset">Zoom Reset</button>
+</div>
+
+<div>
+    <webview id="webview1" src="child.html"></webview>
+    <hr>
+    <input type="load" name="url" id="url" placeholder="Url to load">
+    <button id="load">Load</button>
+</div>
 <script>
     // You can also require other files to run in this process
     require('./renderer.js')
+
+    const {webFrame} = require('electron')
+
+    let zoom = 0;
+
+    document.getElementById('zoom-in').addEventListener('click', () => {
+        webFrame.setZoomLevel(++zoom);
+    })
+    document.getElementById('zoom-out').addEventListener('click', () => {
+        webFrame.setZoomLevel(--zoom);
+    })
+    document.getElementById('zoom-reset').addEventListener('click', () => {
+        webFrame.setZoomLevel(zoom = 0);
+    })
+
+    const webview = document.getElementById('webview1')
+    webview.addEventListener('did-stop-loading', () => {
+        webview.insertCSS('body{background:orange !important;}')
+    })
+
+    load.addEventListener('click', () => {
+        console.log('Started loading webview')
+        webview.loadURL(url.value)
+    })
+
+    console.log(webFrame.getResourceUsage())
+
+    console.log(`Process type: $(process.type)`)
+    console.log(`Electron Version: $(process.versions.electron)`)
+
+    let win;
+
+    const openWin = () => {
+        win = window.open('https://www.google.com')
+    }
+
+    const closeWin = () => {
+        win.close()
+    }
 </script>
 </body>
 </html>
