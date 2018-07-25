@@ -1,9 +1,20 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, session, dialog, globalShortcut, Menu, MenuItem, Tray} = require('electron')
+const {app, BrowserWindow, session, dialog, globalShortcut, Menu, MenuItem, Tray, ipcMain} = require('electron')
 
 const windowStateKeeper = require('electron-window-state')
 
 require('electron-reload')(__dirname)
+
+ipcMain.on('channel1', (e, args) => {
+    console.log(args)
+    if(args.hasOwnProperty('close')) process.exit()
+    e.sender.send('channel1', 'Message received on the main process (channel2)')
+})
+
+ipcMain.on('channel2', (e, args) => {
+    console.log(args)
+    e.sender.send('channel2', 'Message received on the main process (channel2)')
+})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -93,6 +104,10 @@ function createWindow() {
         contextMenu.popup({})
     })
     winState.manage(mainWindow)
+
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.webContents.send('private', 'Message from main process to MainWindow')
+    })
 
     let defaultSession = session.defaultSession
     let mainSession = mainWindow.webContents.session
