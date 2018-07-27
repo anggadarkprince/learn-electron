@@ -8,7 +8,8 @@ exports.createWindow = () => {
         height: 650,
         minWidth: 350,
         maxWidth: 650,
-        minHeight: 310
+        minHeight: 310,
+        icon: `${__dirname}/icons/64x64.png`
     })
 
     //this.win.webContents.openDevTools();
