@@ -11,7 +11,7 @@ exports.createWindow = () => {
         minHeight: 310
     })
 
-    this.win.webContents.openDevTools();
+    //this.win.webContents.openDevTools();
 
     this.win.loadFile('./renderer/main.html')
 

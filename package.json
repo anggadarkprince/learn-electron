@@ -25,6 +25,7 @@
     "bulma": "^0.7.1",
     "electron-window-state": "^4.1.1",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "query-string": "^6.1.0"
   }
 }

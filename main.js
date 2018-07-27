@@ -1,8 +1,18 @@
 // Modules to control application life and create native browser window
-const {app} = require('electron')
+const {app, ipcMain} = require('electron')
 const mainWindow = require('./mainWindow')
+const readItem = require('./readItem')
 
 require('electron-reload')(__dirname)
+
+ipcMain.on('new-item', (e, itemUrl) => {
+    console.log('Request', itemUrl)
+
+    readItem(itemUrl, (item) => {
+        console.log('Result :' + item)
+        e.sender.send('new-item-success', item)
+    })
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
